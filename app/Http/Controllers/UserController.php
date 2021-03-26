@@ -19,7 +19,7 @@ class UserController extends Controller
         //
     }
 
-    // * Method untuk get all data user
+    // * Method untuk login get token JWT
     public function login(Request $request)
     {
         $this->validate($request, [
@@ -41,6 +41,7 @@ class UserController extends Controller
         return self::respondWithToken($token);
     }
 
+    // * Method untuk register token JWT
     public function register(Request $request)
     {
         $this->validate($request, [
@@ -85,5 +86,12 @@ class UserController extends Controller
         }
 
         return response($response, $response['response']);
+    }
+
+    // * Method untuk get All data User
+    public function getUser()
+    {
+        $data = User::all();
+        return response($data);
     }
 }

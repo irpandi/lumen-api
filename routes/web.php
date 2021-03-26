@@ -20,4 +20,8 @@
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/login', 'UserController@login');
     $router->post('/register', 'UserController@register');
+
+    $router->group(['prefix' => 'user', 'middleware' => 'auth.jwt'], function () use ($router) {
+        $router->get('/get-user', 'UserController@getUser');
+    });
 });
