@@ -29,7 +29,7 @@ class UserController extends Controller
             return response()->json(['message' => 'Login Failed'], 401);
         }
 
-        return $this->responseWithToken($token, true);
+        return $this->responseWithToken($token);
     }
 
     // * Method untuk register token JWT
@@ -121,11 +121,9 @@ class UserController extends Controller
     }
 
     // * Function response with token
-    private function responseWithToken($token, $user = false)
+    private function responseWithToken($token)
     {
-        if ($user) {
-            $user = Auth::user();
-        }
+        $user = Auth::user();
 
         return response()->json([
             'message' => 'success',
