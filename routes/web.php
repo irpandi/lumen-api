@@ -13,15 +13,20 @@
 |
  */
 
-// $router->get('/', function () use ($router) {
-//     return $router->app->version();
-// });
-
 $router->group(['prefix' => 'api'], function () use ($router) {
-    $router->post('/login', 'UserController@login');
-    $router->post('/register', 'UserController@register');
+    $router->get('/version', function () use ($router) {
+        return $router->app->version();
+    });
 
-    $router->group(['prefix' => 'user', 'middleware' => 'auth.jwt'], function () use ($router) {
-        $router->get('/get-user', 'UserController@getUser');
+    $router->group(['prefix' => 'v1'], function () use ($router) {
+        $router->post('/login', 'UserController@login');
+        $router->post('/register', 'UserController@register');
+        $router->get('/refreshToken', 'UserController@refreshToken');
+
+        $router->group(['prefix' => 'user', 'middleware' => 'auth.jwt'], function () use ($router) {
+            $router->get('/get-user', 'UserController@getUser');
+            $router->get('/loginUser', 'UserController@loginUser');
+            $router->get('/logoutUser', 'UserController@logoutUser');
+        });
     });
 });
