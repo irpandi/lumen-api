@@ -25,8 +25,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
         $router->group(['prefix' => 'user', 'middleware' => 'auth.jwt'], function () use ($router) {
             $router->get('/get-user', 'UserController@getUser');
-            $router->get('/loginUser', 'UserController@loginUser');
-            $router->get('/logoutUser', 'UserController@logoutUser');
+            $router->get('/', 'UserController@index');
+            $router->get('/logout', 'UserController@logout');
         });
     });
 });

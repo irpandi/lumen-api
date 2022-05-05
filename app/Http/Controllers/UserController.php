@@ -29,7 +29,7 @@ class UserController extends Controller
             return response()->json(['message' => 'Login Failed'], 401);
         }
 
-        return $this->responseWithToken($token);
+        return $this->responseWithToken($token, true);
     }
 
     // * Method untuk register token JWT
@@ -94,7 +94,7 @@ class UserController extends Controller
     }
 
     // * Function untuk get api login user
-    public function loginUser()
+    public function index()
     {
         $user = Auth::user();
 
@@ -108,7 +108,7 @@ class UserController extends Controller
     }
 
     // * Function untuk logout user
-    public function logoutUser()
+    public function logout()
     {
         Auth::logout();
 
@@ -121,11 +121,20 @@ class UserController extends Controller
     }
 
     // * Function response with token
-    private function responseWithToken($token)
+    private function responseWithToken($token, $user = false)
     {
+        if ($user) {
+            $user = Auth::user();
+        }
+
         return response()->json([
-            'token'      => $token,
-            'expires_in' => Auth::factory()->getTTL() * 60,
+            'message' => 'success',
+            'status'  => 200,
+            'data'    => array(
+                'user'       => $user,
+                'token'      => $token,
+                'expires_in' => Auth::factory()->getTTL() * 60,
+            ),
         ], 200);
     }
 
