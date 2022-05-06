@@ -43,11 +43,14 @@ class MahasiswaController extends Controller
 
         $data = TblMahasiswa::select(
             'tbl_mahasiswa.id',
-            'tbl_mahasiswa.name',
-            'tbl_mahasiswa.nim'
+            'tbl_mahasiswa.user_id',
+            'tbl_mahasiswa.nim',
+            'tbl_mahasiswa.nik',
+            'user.name'
         )
-            ->where('tbl_mahasiswa.name', 'like', '%' . $search . '%')
-            ->orWhere('tbl_mahasiswa.nim', 'like', '%' . $search . '%')
+            ->leftJoin('user', 'user.id', '=', 'tbl_mahasiswa.user_id')
+            ->where('tbl_mahasiswa.nim', 'like', '%' . $search . '%')
+            ->orWhere('user.name', 'like', '%' . $search . '%')
             ->orderBy($sort, $order)
             ->paginate($limit);
 
@@ -66,7 +69,9 @@ class MahasiswaController extends Controller
         $status  = 200;
         $message = 'success';
 
-        $data = TblMahasiswa::find($id);
+        $data = TblMahasiswa::where('id', $id)
+            ->with('user')
+            ->first();
 
         $response = array(
             'status'  => $status,
