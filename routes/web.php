@@ -23,10 +23,21 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->post('/register', 'UserController@register');
         $router->get('/refreshToken', 'UserController@refreshToken');
 
-        $router->group(['prefix' => 'user', 'middleware' => 'auth.jwt'], function () use ($router) {
-            $router->get('/get-user', 'UserController@getUser');
-            $router->get('/', 'UserController@index');
-            $router->get('/logout', 'UserController@logout');
+        $router->group(['middleware' => 'auth.jwt'], function () use ($router) {
+            $router->group(['prefix' => 'user'], function () use ($router) {
+                $router->get('/get-user', 'UserController@getUser');
+                $router->get('/', 'UserController@index');
+                $router->get('/logout', 'UserController@logout');
+            });
+
+            $router->group(['prefix' => 'mahasiswa'], function () use ($router) {
+                $router->get('/', 'MahasiswaController@index');
+                $router->get('/{id}', 'MahasiswaController@show');
+                $router->post('/', 'MahasiswaController@store');
+                $router->put('/{id}', 'MahasiswaController@update');
+                $router->delete('/{id}', 'MahasiswaController@destroy');
+            });
         });
+
     });
 });

@@ -39,13 +39,11 @@ class UserSeeder extends Seeder
             // * Create mahasiswa
             TblMahasiswa::create([
                 'user_id'        => $user->id,
-                'name'           => $name,
                 'nik'            => $nik,
                 'nim'            => $nim,
                 'date_of_birth'  => $date,
                 'place_of_birth' => $word,
                 'gender'         => $gender,
-                'email'          => $email,
                 'address'        => $address,
                 'phone_number'   => $phone,
             ]);
