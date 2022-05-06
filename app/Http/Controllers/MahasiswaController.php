@@ -20,24 +20,24 @@ class MahasiswaController extends Controller
         $order  = 'desc';
         $limit  = 10;
 
-        $reqSearch = $req->search;
-        $reqSort   = $req->sort;
-        $reqOrder  = $req->order;
-        $reqLimit  = $req->limit;
+        $reqSearch = isset($req->search) ? $req->search : '';
+        $reqSort   = isset($req->sort) ? $req->sort : '';
+        $reqOrder  = isset($req->order) ? $req->order : '';
+        $reqLimit  = isset($req->limit) ? $req->limit : '';
 
         if ($reqSearch != '') {
             $search = $reqSearch;
         }
 
-        if ($reqSort != 'tbl_mahasiswa.id') {
+        if ($reqSort != '') {
             $sort = $reqSort;
         }
 
-        if ($reqOrder != 'desc') {
+        if ($reqOrder != '') {
             $order = $reqOrder;
         }
 
-        if ($reqLimit != 10) {
+        if ($reqLimit != '') {
             $limit = $reqLimit;
         }
 
