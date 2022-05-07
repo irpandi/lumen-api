@@ -18,7 +18,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         return $router->app->version();
     });
 
-    $router->group(['prefix' => 'v1', 'middleware' => 'cors'], function () use ($router) {
+    $router->group(['prefix' => 'v1'], function () use ($router) {
         $router->post('/login', 'UserController@login');
         $router->post('/register', 'UserController@register');
         $router->get('/refreshToken', 'UserController@refreshToken');
