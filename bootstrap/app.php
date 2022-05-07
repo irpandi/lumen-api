@@ -79,6 +79,7 @@ $app->configure('app');
 $app->routeMiddleware([
     'auth'     => App\Http\Middleware\Authenticate::class,
     'auth.jwt' => App\Http\Middleware\AuthJWTMiddleware::class,
+    'cors'     => App\Http\Middleware\CorsMiddleware::class,
 ]);
 
 /*
@@ -98,6 +99,9 @@ $app->register(App\Providers\AuthServiceProvider::class);
 
 // * JWT Auth
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+
+// * Register cors
+$app->register(App\Providers\CatchAllOptionsRequestsProvider::class);
 
 /*
 |--------------------------------------------------------------------------
