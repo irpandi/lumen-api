@@ -45,10 +45,10 @@ class UserController extends Controller
         $email    = $request->email;
         $password = $request->password;
 
-        $email = User::where('email', $email)
+        $checkEmail = User::where('email', $email)
             ->count();
 
-        if ($email > 0) {
+        if ($checkEmail > 0) {
             $response = array(
                 'message'  => 'User Exist',
                 'response' => 500,
