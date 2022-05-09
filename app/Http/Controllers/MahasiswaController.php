@@ -41,6 +41,8 @@ class MahasiswaController extends Controller
             $limit = $reqLimit;
         }
 
+        $lowerSearch = '%' . trim(strtolower($search)) . '%';
+
         $data = TblMahasiswa::select(
             'tbl_mahasiswa.id',
             'tbl_mahasiswa.user_id',
@@ -49,8 +51,8 @@ class MahasiswaController extends Controller
             'user.name'
         )
             ->leftJoin('user', 'user.id', '=', 'tbl_mahasiswa.user_id')
-            ->where('tbl_mahasiswa.nim', 'like', '%' . $search . '%')
-            ->orWhere('user.name', 'like', '%' . $search . '%')
+            ->whereRaw('LOWER(nim) LIKE ? ', [$lowerSearch])
+            ->orWhereRaw('LOWER(name) LIKE ? ', [$lowerSearch])
             ->orderBy($sort, $order)
             ->paginate($limit);
 
